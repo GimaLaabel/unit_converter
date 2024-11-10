@@ -4,43 +4,46 @@ class Pressure_unit(Enum):
     PSIA = "psia"
     PSIG = "psig"
 
-def convert_psia_psig(value: float | list[float], unit: Pressure_unit) -> tuple[float, Pressure_unit]:
+
+# region Psia_Psig
+def convert_psia_psig(value: float | list[float], unit: Pressure_unit) -> list[float, Pressure_unit.PSIG]:
     """
-    The function is for conversion between two pairs of units.
-    Given a unit, it converts and returns the other unit.
-    It returns a tuple of value and pressure_unit enum.
+    This function converts pressure values from psia to psig. 
+    It receives a value or list of values. It returns a list 
+    of the converted value and an enum representing the unit
     """
 
     if type(value).__name__=="list":
         if unit == Pressure_unit.PSIA:
             new_val = [max(0, val-14.7) for val in value]
-            return (new_val, Pressure_unit.PSIG)
+            return [new_val, Pressure_unit.PSIG]
         elif unit == Pressure_unit.PSIG:
-            return (value, Pressure_unit.PSIG)
+            return [value, Pressure_unit.PSIG]
 
     if unit == Pressure_unit.PSIA:
-        return (max(0, value - 14.7), Pressure_unit.PSIG)
+        return [max(0, value - 14.7), Pressure_unit.PSIG]
     elif unit == Pressure_unit.PSIG:
-        return (value, Pressure_unit.PSIG,)
+        return [value, Pressure_unit.PSIG]
     
-def convert_psig_psia(value: float | list[float], unit: Pressure_unit) -> tuple[float, Pressure_unit]:
+def convert_psig_psia(value: float | list[float], unit: Pressure_unit) -> list[float, Pressure_unit.PSIA]:
     """
-    The function is for conversion between two pairs of units.
-    Given a unit, it converts and returns the other unit.
-    It returns a tuple of value and pressure_unit enum.
+    This function converts pressure values from psig to psia. 
+    It receives a value or list of values.  It returns a list 
+    of the converted value and an enum representing the unit
     """
     if type(value).__name__=="list":
         if unit == Pressure_unit.PSIG:
             new_val = [val+14.7 for val in value]
-            return (new_val, Pressure_unit.PSIA)
+            return [new_val, Pressure_unit.PSIA]
         elif unit == Pressure_unit.PSIA:
-            return (value, Pressure_unit.PSIA)
+            return [value, Pressure_unit.PSIA]
 
     if unit == Pressure_unit.PSIG:
-        return (value + 14.7, Pressure_unit.PSIG)
+        return [value + 14.7, Pressure_unit.PSIG]
     elif unit == Pressure_unit.PSIA:
-        return (value, Pressure_unit.PSIA,)
-        
+        return [value, Pressure_unit.PSIA]
+
+#endregion
 
 if __name__ == "__main__":
     var1 = (10, Pressure_unit.PSIA)
@@ -59,4 +62,3 @@ if __name__ == "__main__":
 #     print(f"{convert_psig_psia.__name__}, {result_var2 = }")
 #     print(f"{convert_psia_psig.__name__}, {result_vars1 = }")
 #     print(f"{convert_psig_psia.__name__}, {result_vars2 = }")
-  
